@@ -2,7 +2,7 @@
 Python script simulating different formats that are used in Fantasy Basketball. 
 
 # Simulations 
-[data1.xlsx](https://github.com/WilliamZhai/FantasyBasketballAuctionDraftSimulation/blob/main/data.xlsx) includes simulation samples of a traditional snake draft format in contrast to budget auction formats.
+[data1.xlsx](https://github.com/WilliamZhai/FantasyBasketballAuctionDraftSimulation/blob/main/data1.xlsx) includes simulation samples of a traditional snake draft format in contrast to budget auction formats.
 
 ### Generating the valuations of items
 
