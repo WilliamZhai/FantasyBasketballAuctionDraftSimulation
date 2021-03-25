@@ -251,7 +251,6 @@ def create_sheet(sheet_name, num_bidder, num_item, gamma_input=3, gamma_scale=10
     # =============================================== first price budget auction ===============================================
     row_start += 2
     # generate fair budget from avg utility in snake draft
-    budget = int((sum_total / 4) * 1.1)
 
     sheet.write(row_start, 0, "FIRST PRICE BUDGET AUCTION RESULT", header_border)
     sheet.write(row_start, 1, "budget=" + str(budget), header_border)
