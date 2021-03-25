@@ -1,16 +1,14 @@
 # FantasyBasketballAuctionDraftSimulation
 Python script simulating different formats that are used in Fantasy Basketball. 
 
-
-
 # Simulations 
-[data1.xlsx](https://github.com/WilliamZhai/FantasyBasketballAuctionDraftSimulation/blob/main/data.xlsx) includes simulation samples of a traditional snake draft format in contrast to a second price budget auction format.
+[data1.xlsx](https://github.com/WilliamZhai/FantasyBasketballAuctionDraftSimulation/blob/main/data.xlsx) includes simulation samples of a traditional snake draft format in contrast to budget auction formats.
 
 ### Generating the valuations of items
 
 - Common values are gernerated from a gamma distribution with input ***Γ*** and ***scale***.
 - Private values are generated from a uniformed distribution with input ***a*** and ***b***.
-- Their sum will represent the overall valuation of a bidder for an item.
+- Their sum will represent the overall **valuation** of a bidder for an item.
 - The input values are currently set to their default values but feel free to modify them for your uses.
 
 ### There are 30 sheets each with a sample simulation
@@ -24,3 +22,4 @@ Python script simulating different formats that are used in Fantasy Basketball.
     - number of bidders = 8
     - number of items = 64
 
+- Each simulation showcases different resulting **utilty** for the bidders.

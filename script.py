@@ -248,6 +248,70 @@ def create_sheet(sheet_name, num_bidder, num_item, gamma_input=3, gamma_scale=10
     row_start += num_bidder
     sheet.write(row_start, x + 2, sum_total, upperline)
 
+    # =============================================== first price budget auction ===============================================
+    row_start += 2
+    # generate fair budget from avg utility in snake draft
+    budget = int((sum_total / 4) * 1.1)
+
+    sheet.write(row_start, 0, "FIRST PRICE BUDGET AUCTION RESULT", header_border)
+    sheet.write(row_start, 1, "budget=" + str(budget), header_border)
+    for i in range(2, num_item + 1):
+        sheet.write(row_start, i, "", header_border)
+    
+    # setup
+    bidder_items = [ [] for _ in range(num_bidder) ]
+    budgets = [ budget for _ in range(num_bidder) ]
+
+    bidders_valuation_copy = copy.deepcopy(private_values)
+    for y in range(num_bidder):
+        for x in range(num_item):
+            bidders_valuation_copy[y][x] = bidders_valuation_copy[y][x] + common_values[x]
+
+    # set the auction order for items based on overall valuations
+    auction_order = set_auction_order(bidders_valuation_copy)
+
+    # compute each round
+    row_start = row_start + 2
+
+    for i in range(num_item):
+        index = auction_order[i]
+        bids = []
+        for j in range(num_bidder):
+            if len(bidder_items[j]) < (num_item / num_bidder):
+                bid_from_strategy = int(bidders_valuation_copy[j][index] * num_bidder / (num_bidder - 1))
+                bid = min(bid_from_strategy , budgets[j]) # bids his valuation or remaining budget
+                bids.append(bid)
+            else:
+                bid = 0
+                bids.append(bid)
+
+        # compute round
+        [winner_index, price] = get_winner_second_price_auctiion(bids)
+
+        # give item to the winner
+        bidder_items[winner_index].append(bidders_valuation_copy[winner_index][index])
+
+        # reduce winner's budget by the second highest bid
+        budgets[winner_index] -= price
+
+    # write to sheet
+    for x in range(len(bidder_items[y])):
+        sheet.write(row_start - 1, x + 1, "item" + str(x + 1))
+    sheet.write(row_start - 1, len(bidder_items[y]) + 1, "total utility")
+
+    sum_total = 0
+    for y in range(num_bidder):
+        total = 0
+        sheet.write(row_start + y, 0, "bidder" + str(y + 1) + " item values: ")
+        for x in range(len(bidder_items[y])):
+            sheet.write(row_start + y, x + 1, bidder_items[y][x])
+            total += bidder_items[y][x]
+        sheet.write(row_start + y, x + 2, total)
+        sum_total += total
+    
+    row_start += num_bidder
+    sheet.write(row_start, x + 2, sum_total, upperline)
+
 
 # SET INPUT HERE
 
